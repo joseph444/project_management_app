@@ -33,6 +33,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'users',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -70,6 +71,8 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'core.wsgi.application'
+
+AUTH_USER_MODEL='users.Users'
 
 
 # Database
@@ -133,9 +136,8 @@ STATICFILES_DIRS = [
 #this are mainly used when working with SPAs
 STATIC_ROOT = os.path.join(ROOT_DIR,'static')
 
-MEDIA_URL = '/media/'
-
 MEDIA_ROOT = os.path.join(ROOT_DIR,'media')
+MEDIA_URL = '/media/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
