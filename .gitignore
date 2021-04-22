@@ -4,3 +4,4 @@ static/
 media/
 __pycache__/
 *.pyc
+*.sql

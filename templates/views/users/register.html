@@ -1,0 +1,54 @@
+{%extends 'app/app.html'%}
+
+{%block content%}
+    <div class="container ">
+        <div class="row justify-content-center ">
+            <div class="col-md-4">
+                <div class="card rounded p-2 shadow-lg" >
+                    
+                    <div class="card-body">
+                        <h2 class="card-header"> Register </h2>
+                        {%if errors%}
+                        <div class="alert alert-danger" role="alert">
+                          {{errors}}
+                        </div>
+                        {%endif%}
+                      
+                      <form action="/users/register/" method="post" class="row  justify-content-center">
+                          {%csrf_token%}
+                          <div class="col-md-12">
+                              <label for="email" class="form-label">Email</label>
+                              <input class="form-control form-control-lg" type="email" id="email" name="email" placeholder="" required >
+                          </div>
+                          <div class="col-md-12">
+                            <label for="first_name" class="form-label">First Name</label>
+                            <input class="form-control form-control-lg" type="text" id="first_name" name="first_name" placeholder="" required >
+                          </div>
+
+                          <div class="col-md-12">
+                            <label for="last_name" class="form-label">First Name</label>
+                            <input class="form-control form-control-lg" type="text" id="last_name" name="last_name" placeholder="" required >
+                          </div>
+
+                          <div class="col-md-12">
+                            <label for="password1" class="form-label">Password</label>
+                            <input class="form-control form-control-lg" type="password" id="password1" name="password1" placeholder="" required >
+                          </div>
+
+                          <div class="col-md-12">
+                            <label for="password2" class="form-label">Confirm Password</label>
+                            <input class="form-control form-control-lg" type="password" id="password2" name="password2" placeholder="" required >
+                          </div>
+
+                          <div class="col-md-4 p-2">
+                              <button class="btn btn-lg btn-primary">
+                                  Register
+                              </button>
+                          </div>
+                      </form>
+                    </div>
+                  </div>
+            </div>
+        </div>
+    </div>
+{%endblock%}

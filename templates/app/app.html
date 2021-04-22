@@ -1,0 +1,38 @@
+{% load static %}
+{% static "" as baseUrl %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--Css-->
+    <link rel="stylesheet" href="{%static 'css/bootstrap.min.css'%}">
+
+    <!--Javascript-->
+    <script src="{% static 'js/jquery.js'%}"></script>
+    <script src="{% static 'js/bootstrap.min.js'%}"></script>
+    {%if title%}
+        <title>{{title}}</title>
+    {%else%}
+        <title>Project Management App</title>
+    {%endif%}
+
+    <style>
+        .bg-grey{
+            background-color: #a1a1a1;
+        }
+    </style>
+
+
+</head>
+<body class="bg-grey">
+    {%include 'app/navbar.html'%}
+    <div class="container-fluid mt-5">
+        {% block content%}
+        {% endblock%}
+    </div>
+    
+</body>
+</html>

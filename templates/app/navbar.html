@@ -1,0 +1,43 @@
+<nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid ml-5">
+    <a class="navbar-brand" href="/">Project Management App</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse ms-md-5 ps-md-5" id="navbarNavAltMarkup">
+      <div class="navbar-nav ">
+          {%if user.is_authenticated%}
+            <div class="nav-item">
+              <a href="/users/" class="nav-link">Home</a>
+            </div>
+            <div class="nav-item">
+              <a href="/projects/" class="nav-link">Projects</a>
+            </div>
+            <div class="nav-item">
+              <a href="/settings/" class="nav-link">Profile</a>
+            </div>
+            <div class="nav-item">
+              <a href="/users/update" class="nav-link">Settings</a>
+            </div>
+            <form action="/users/logout" method="post" class="nav-item">
+              {%csrf_token%}
+                <button class=" btn nav-link">Logout</button>
+            </form>
+          {%else%}
+            <div class="nav-item">
+              <a href="/" class="nav-link">Home</a>
+            </div>
+            <div class="nav-item">
+              <a href="/about" class="nav-link">About</a>
+            </div>
+            <div class="nav-item">
+              <a href="/users/login" class="nav-link">Login</a>
+            </div>
+            <div class="nav-item">
+              <a href="/users/register" class="nav-link">Register</a>
+            </div>
+          {%endif%}
+      </div>
+    </div>
+  </div>
+</nav>
