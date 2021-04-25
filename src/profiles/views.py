@@ -77,13 +77,11 @@ def updateProfile(request):
                 pro_pic = request.FILES.get('pro_picture')
                 userProfile.pro_picture =pro_pic
             userProfile.save()
-            request.session['UPDATE']=True
+            
         except Exception as e:
             print(e)
-            request.session['UPDATE']=False
-            request.session['REASON'] = "EXCEPTION OCCURED"
+            
     else:
-        request.session['UPDATE']=False
-        request.session['REASON'] = prof.errors
+        pass
     return redirect('my_profile')
     

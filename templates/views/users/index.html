@@ -1,5 +1,25 @@
 {%extends 'app/app.html'%}
 
 {%block content%}
-    
+    <div class="container">
+        <div class="row justify-content-center  p-3">
+            <div class="col-md-4">
+                <div class="list-group ">
+                    <div class="list-group-item {%ifequal template 'all_project' %}active{%endifequal%}">
+                        <a href="/users" class="nav-link text-dark">All Project</a>
+                    </div>
+                    <div class="list-group-item {%ifequal template 'create_project' %}active{%endifequal%}">
+                        <a href="/users/?create_project" class="nav-link text-dark">Create a Project</a>
+                    </div>
+                    <div class="list-group-item {%ifequal template 'join_project' %}active{%endifequal%}">
+                        <a href="/users/?join_project" class="nav-link text-dark">Join a Project</a>
+                    </div>
+                    
+                </div>
+            </div>
+            <div class="col-md-7">
+                {%include template_url%}
+            </div>
+        </div>
+    </div>
 {%endblock%}

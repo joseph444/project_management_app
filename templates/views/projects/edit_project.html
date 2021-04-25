@@ -1,0 +1,46 @@
+{%extends 'app/app.html'%}
+
+{%block content%}
+    <div class="row justify-content-center">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">
+                    <h2>Edit {{project.project_name}}</h2>
+                </div>
+                <div class="card-body">
+                    <form action="/projects/{{project.slug}}/edit/" method="POST" class="row">
+                        {%csrf_token%}
+                        <div class="col-sm-12">
+                            {%if errors%}
+                                <div class="alert alert-danger">
+                                    {{errors}}
+                                </div>
+                            {%endif%}
+                        </div>
+                        <div class="col-sm-12">
+                            <label for="project_name" class="form-label">Project Name</label>
+                            <input type="text" class="form-control form-control-lg" name="project_name" id="project_name" value="{{project.project_name}}">
+                        </div>
+                        <div class="col-sm-12">
+                            <label for="description" class="form-label">Description</label>
+                            <textarea name="description" id="description" style="resize: none;" class="form-control" placeholder="Give a Short Jist For the People Joining" required >{{project.description}}</textarea>
+                        </div>
+                        <div class="col-sm-12">
+                            <label for="budget" class="form-label">Budget</label>
+                            <input type="number" name="budget" id="budget" class="form-control" value="{{project.budget}}">
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form-check">
+                                <label for="close" class="form-check-label">Close Projet</label>
+                                <input type="checkbox" id="close" name="isClosed" class="form-check-input">
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <button class="btn btn-lg btn-primary">Update</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{%endblock%}

@@ -1,0 +1,38 @@
+<div class="row">
+    {%for data in datas%}
+        <div class="col-12 my-2">
+            <div class="card">
+                <h3 class="card-header">{{data.project_name}}</h3>
+                <div class="card-body">
+                    
+                    <h5 class="card-text">
+                        {{data.description}}
+                    </h5>
+                    <p class="card-text text-secondary">{{data.created_at}}</p>
+                </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item"> Project Budget: 	&#8377;{{data.budget}}</li>
+                        <li class="list-group-item">Send this slug to add people to this project</li>
+                        <li class="list-group-item text-success"><strong>{{data.slug}}</strong></li>
+                    </ul>
+                    
+                    <div class="card-body">
+                        <div class="btn-group">
+                        {%if user == data.user_id%}
+                        <a href="/projects/{{data.slug}}/edit" class="btn  btn-warning">Edit</a>
+                        <form action="/projects/{{data.slug}}/delete" method="post">
+                            {%csrf_token%}
+                            <button onclick="confirm('Are you sure?')" class="btn  btn-danger">Delete</button>
+                        </form>
+                        {%endif %}
+                        <a href="/projects/{{data.slug}}/team-list" class="btn btn-primary">Team List</a>
+                        <a href="" class="btn btn-success">Tasks</a>
+                    </div>
+                    </div>
+                    
+
+                
+            </div>
+        </div>
+    {%endfor%}
+</div>

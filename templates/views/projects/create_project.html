@@ -1,0 +1,27 @@
+<div class="container">
+    <div class="card rounded shadow-sm">
+        <div class="card-header">
+            Create a new Project
+        </div>
+        <div class="card-body">
+            <form action="/projects/create/" method="POST" class="row">
+                {%csrf_token%}
+                <div class="col-sm-12">
+                    <label for="project_name" class="form-label">Project Name</label>
+                    <input type="text" class="form-control form-control-lg" name="project_name" id="project_name">
+                </div>
+                <div class="col-sm-12">
+                    <label for="description" class="form-label">Description</label>
+                    <textarea name="description" id="description" style="resize: none;" class="form-control" placeholder="Give a Short Jist For the People Joining" required ></textarea>
+                </div>
+                <div class="col-sm-12">
+                    <label for="budget" class="form-label">Budget</label>
+                    <input type="number" name="budget" id="budget" class="form-control">
+                </div>
+                <div class="col-sm-12 py-2">
+                    <button class="btn btn-lg btn-primary">Create</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
