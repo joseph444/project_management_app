@@ -1,12 +1,13 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,HttpResponse
 from django.http import Http404
-from .models import Project,unique_slugify
+from django.db.models import Q
+from .models import Project,Subscriber
 from django.contrib.auth.decorators import login_required
-from .forms import ProjectForm,ProjectEditForm
+from .forms import ProjectForm,ProjectEditForm,ProjectJoinForm
 
 
 def all_projects(request):
-    projects=Project.objects.filter(user_id=request.user.id).order_by('-created_at')
+    projects=Project.objects.filter(Q(user_id=request.user.id)|Q(subscriber__subscriber=request.user)).order_by('-created_at')
     return projects
 
 
@@ -70,3 +71,34 @@ def delete_project(request,slug):
         raise Http404("Project not found")
 
 
+@login_required
+def join_project(request):
+    joinForm = ProjectJoinForm(request.GET)
+    if joinForm.is_valid():
+            slug = joinForm.cleaned_data['slug']
+            proj = Project.objects.filter(slug=slug).exclude(Q(user_id=request.user)|Q(subscriber__subscriber=request.user))
+            if proj.exists():
+                
+                project=proj[0]
+                user = request.user
+                subscriber = Subscriber(project=project,subscriber=user)
+                subscriber.save()
+                return redirect('user_home')
+            else:
+                return HttpResponse("<script>alert('No such 2nd Party Project was Found');location.replace('/users/');</script>")
+    else:
+        return redirect('user_home')
+        
+@login_required
+def leave_project(request,slug):
+    if request.method=="POST":
+        projects = Project.objects.filter(slug=slug)
+        if projects.exists():
+            project = projects[0]
+            subscriber = Subscriber.objects.filter(project=project,subscriber=request.user)
+            if subscriber.exists():
+                subscriber.delete()
+                return redirect('user_home')
+    
+    return Http404()
+            

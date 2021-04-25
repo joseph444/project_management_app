@@ -13,3 +13,7 @@ class ProjectEditForm(forms.Form):
     description = forms.CharField(required=True)
     budget = forms.FloatField(required=True)
     isClosed = forms.BooleanField(required=False)
+
+
+class ProjectJoinForm(forms.Form):
+    slug = forms.CharField(max_length=400,required=True)

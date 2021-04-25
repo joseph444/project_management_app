@@ -22,7 +22,12 @@
                         <a href="/projects/{{data.slug}}/edit" class="btn  btn-warning">Edit</a>
                         <form action="/projects/{{data.slug}}/delete" method="post">
                             {%csrf_token%}
-                            <button onclick="confirm('Are you sure?')" class="btn  btn-danger">Delete</button>
+                            <button onclick="" class="btn  btn-danger">Delete</button>
+                        </form>
+                        {%else%}
+                        <form action="/projects/{{data.slug}}/leave/" method="post">
+                            {%csrf_token%}
+                            <button onclick="" class="btn  btn-danger">Leave Project</button>
                         </form>
                         {%endif %}
                         <a href="/projects/{{data.slug}}/team-list" class="btn btn-primary">Team List</a>

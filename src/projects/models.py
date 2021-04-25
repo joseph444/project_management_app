@@ -21,12 +21,22 @@ class Project(models.Model):
         
         super(Project,self).save(*args,**kwargs)
     
+    def __str__(self):
+        return self.project_name
+    
     
 
 def unique_slugify(slug):
-    unique_slug = slugify(slug)
+    unique_slug = slugify(slug + '-'+get_random_string(length=10,allowed_chars='abcdef0123456789_ '))
     while Project.objects.filter(slug=unique_slug).exists():
         unique_slug = slugify(slug + '-'+get_random_string(length=10,allowed_chars='abcdef0123456789_ '))
     return unique_slug
 
-# Create your models here.
+
+
+class Subscriber(models.Model):
+    project = models.ForeignKey(Project,on_delete=models.CASCADE)
+    subscriber = models.ForeignKey(Users,on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+   

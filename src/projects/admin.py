@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Project
+from .models import Project,Subscriber
 
 
 class ProjectAdmin(admin.ModelAdmin):
@@ -20,4 +20,24 @@ class ProjectAdmin(admin.ModelAdmin):
     )
 
 
+class SubscriberAdmin(admin.ModelAdmin):
+    ordering = ('id',)
+    search_fields = ['subscriber','project']
+    list_display = ['subscriber','project']
+    readonly_fields = ('created_at',)
+
+    list_filter=()
+    filter_horizontal=()
+    fieldsets =()
+
+    add_fieldsets =(
+        (
+            None,{
+                'classes':('wide',),
+                'fields':('subscriber','project')
+            }
+        )
+    )
+
 admin.site.register(Project,ProjectAdmin)
+admin.site.register(Subscriber,SubscriberAdmin)
