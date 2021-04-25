@@ -27,9 +27,9 @@ class Project(models.Model):
     
 
 def unique_slugify(slug):
-    unique_slug = slugify(slug + '-'+get_random_string(length=10,allowed_chars='abcdef0123456789_ '))
+    unique_slug = slugify(slug + '-'+get_random_string(length=10,allowed_chars='abcdef0123456789- '))
     while Project.objects.filter(slug=unique_slug).exists():
-        unique_slug = slugify(slug + '-'+get_random_string(length=10,allowed_chars='abcdef0123456789_ '))
+        unique_slug = slugify(slug + '-'+get_random_string(length=10,allowed_chars='abcdef0123456789- '))
     return unique_slug
 
 
@@ -39,4 +39,5 @@ class Subscriber(models.Model):
     subscriber = models.ForeignKey(Users,on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
 
-   
+    def __str__(self):
+        return self.subscriber.profile.username+" working in "+self.project.project_name

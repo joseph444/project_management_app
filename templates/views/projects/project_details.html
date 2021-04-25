@@ -1,0 +1,80 @@
+{%extends 'app/app.html'%}
+
+{%block content%}
+<div class="container-fluid">
+    <div class="row justify-center">
+        <div class="col-sm-3">
+            <!--Project Details-->
+            <div class="card">
+                <div class="card-header">
+                    <h4>{{project.project_name}}</h4>
+                </div>
+                <div class="card-body">
+                    <h5 class="card-text">
+                        <strong>Description:</strong>
+                        {{project.description}}
+                    </h5>
+                    <p class="card-text text-secondary">
+                        {{project.created_at}}
+                    </p>
+                </div>
+                <div class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <h4>Team Member List</h4>
+                    </li>
+                    <li class="list-group-item">
+                         <strong>Project Head</strong>
+                         <div class=" row">
+                            <div class="col-3">
+                                <img src="{{project.user_id.profile.pro_picture.url}}" alt="{{project.user_id.profile}}" class="avatar" style="width: 50px;height:50px">
+                            </div>
+                            <div class="col-8">
+                                <h5><a href="/profile/{{project.user_id.profile.username}}">{{project.user_id.profile}}</a></h5>
+                                <p class="text-secondary">{{project.user_id.profile.role}}</p>
+                            </div>
+                            
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <strong>
+                            other members
+                        </strong>
+                    </li>
+                    {%for subscriber in subscribers%}
+                        <li class="list-group-item">
+                            <div class=" row">
+                                <div class="col-3">
+                                    <img src="{{subscriber.subscriber.profile.pro_picture.url}}" alt="{{subscriber.subscriber.profile}}" class="avatar" style="width: 50px;height:50px">
+                                </div>
+                                <div class="col-8">
+                                    <h5><a href="/profile/{{subscriber.subscriber.profile.username}}">{{subscriber.subscriber.profile}}</a></h5>
+                                    <p class="text-secondary">{{subscriber.subscriber.profile.role}}</p>
+                                </div>
+                                {%if project.user_id == user%}
+                                <div class="col-12">
+                                    <div class="btn-group">
+                                        <form action="/projects/{{project.slug}}/remove/" method="post">
+                                            {%csrf_token%}
+                                            <input type="hidden" name="id" value="{{subscriber.subscriber.id}}">
+                                            <button class="btn btn-sm btn-danger">Remove</button>
+                                        </form>
+                                        <form action="/projects/{{project.slug}}/transfer/" method="post">
+                                            {%csrf_token%}
+                                            <input type="hidden" name="id" value="{{subscriber.subscriber.id}}">
+                                            <button class="btn btn-sm btn-primary">Transfer Ownership</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            {%endif%}
+                            </div>
+                        </li>
+                    {%endfor%}
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-9">
+            <!--Task Addition and Details-->
+        </div>
+    </div>
+</div>
+{%endblock%}

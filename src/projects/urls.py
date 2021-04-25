@@ -1,11 +1,14 @@
 from django.urls import path
-from .views import create_project,edit_project,delete_project,join_project,leave_project
+from . import views
 
 urlpatterns = [
-    path('<slug:slug>/edit/',edit_project,name='edit_project'),
-    path('<slug:slug>/delete/',delete_project,name='delete_project'),
-    path('<slug:slug>/leave/',leave_project,name='delete_project'),
-    path('create/',create_project,name='create_project'),
-    path('join/',join_project,name='join_project')
+    path('<slug:slug>',views.project_details,name="project_details"),
+    path('<slug:slug>/edit/',views.edit_project,name='edit_project'),
+    path('<slug:slug>/delete/',views.delete_project,name='delete_project'),
+    path('<slug:slug>/leave/',views.leave_project,name='delete_project'),
+    path('<slug:slug>/transfer/',views.transfer_ownership,name='delete_project'),
+    path('<slug:slug>/remove/',views.remove_from_project,name='delete_project'),
+    path('create/',views.create_project,name='create_project'),
+    path('join/',views.join_project,name='join_project')
 
 ]

@@ -4,7 +4,7 @@ from django.db.models import Q
 from .models import Project,Subscriber
 from django.contrib.auth.decorators import login_required
 from .forms import ProjectForm,ProjectEditForm,ProjectJoinForm
-
+from users.models import Users
 
 def all_projects(request):
     projects=Project.objects.filter(Q(user_id=request.user.id)|Q(subscriber__subscriber=request.user)).order_by('-created_at')
@@ -101,4 +101,67 @@ def leave_project(request,slug):
                 return redirect('user_home')
     
     return Http404()
+          
+@login_required
+def remove_from_project(request,slug):
+    context = dict()
+    projects = Project.objects.filter(slug=slug,user_id=request.user)
+    if not projects.exists():
+        raise Http404()
+    if request.method == "POST":
+        sub_id= request.POST.get('id',None)
+        if sub_id is None or sub_id == request.user.id:
+            context['errors']="Please Select Proper User For This Operation"
+        else:
+            try:
+                subscriber = Users.objects.get(pk=sub_id)
+                project = projects[0]
+                sub = Subscriber.objects.get(project=project,subscriber=subscriber)
+                sub.delete()
+            except Subscriber.DoesNotExist as e:
+                context['errors']="The user isn't subscribed to this project"
+    
+    return redirect("project_details",slug=slug)
+
+@login_required
+def transfer_ownership(request,slug):
+    context = dict()
+    projects = Project.objects.filter(slug=slug,user_id=request.user)
+    if not projects.exists():
+        raise Http404()
+    if request.method == "POST":
+        sub_id= request.POST.get('id',None)
+        if sub_id is None or sub_id == request.user.id:
+            context['errors']="Please Select Proper User For This Operation"
+        else:
+            try:
+                new_subscriber = request.user
+                old_subscriber = Users.objects.get(pk=sub_id)
+                project = projects[0]
+                old_sub = Subscriber.objects.get(project=project,subscriber=old_subscriber)
+                old_sub.delete()
+                new_sub = Subscriber(project=project,subscriber=new_subscriber)
+                new_sub.save();
+                project.user_id=old_subscriber;
+                project.save()
+            except Subscriber.DoesNotExist as e:
+                context['errors']="The user isn't subscribed to this project"
+    return redirect("user_home")
             
+@login_required
+def project_details(request,slug):
+    context = dict()
+    projects = Project.objects.filter(slug=slug).filter(Q(subscriber__subscriber=request.user)|Q(user_id=request.user))
+    if not projects.exists():
+        raise Http404()
+    
+    project = projects[0]
+    subscribers = Subscriber.objects.filter(project=project)
+    #task
+    #bugs
+    #expenses
+
+    context['project']=project
+    context['subscribers']=subscribers
+    
+    return render(request,'views/projects/project_details.html',context=context)
