@@ -21,7 +21,7 @@ def register(request):
                 user = registerForm.save()
                 print("hello")
                 login(request,user)
-                return redirect('profile_register')
+                return redirect('register_profile')
                 
             else:
                 context['errors'] = registerForm.errors

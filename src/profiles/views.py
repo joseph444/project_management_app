@@ -15,12 +15,13 @@ def register(request):
         if profileForm.is_valid():
             
             username = profileForm.cleaned_data['username']
-            pro_pic = request.FILES.pro_pic
+            pro_pic = request.FILES['pro_picture']
             user_id = request.user
             role = profileForm.cleaned_data['role']
             bio = profileForm.cleaned_data['bio']
             try:
                 profile = Profile(user_id=user_id,role=role,username=username,bio=bio)
+                profile.pro_picture=pro_pic
                 profile.save()
                 return redirect('user_home')
                 pass

@@ -6,7 +6,7 @@ roles = ['BackEnd Dev','FrontEnd Dev','FullStackDev','HR','PR','Team Lead','DevO
         'Network Admin','Management']
 
 class ProfileRegisterForm(forms.ModelForm):
-    role = forms.ChoiceField(choices=roles,required=True)
+    bio = forms.CharField(required=False)
     class Meta:
         model = Profile
         fields = ('pro_picture','role','username','bio')
