@@ -1,5 +1,43 @@
-{%extends 'app/app.html'%}
+<div class="col-sm-12 my-3 p-4">
+    <form action="/profile/update/" method="post" enctype="multipart/form-data" class="row justify-content-center">
+        <div class="col-sm-12">
+            <h4 class="card-header">Update Profile</h4>
+        </div>
+        <div class="col-sm-12">
+            {%if request.session.UPDATE%}
+                <div class="alert alert-success">
+                    Updated
+                </div>
+            {%elif request.session.UPDATE is False%}
+                <div class="alert alert-danger">
+                    {{request.session.REASON}}
+                </div>
+            {%endif%}
+        </div>
+        {%csrf_token%}
+        <div class="col-sm-12">
+            <label for="username" class="form-label">Role</label>
+            <select name="role" id="username" class="form-select form-select-lg">
+                {%for role in roles%}
+                    {%ifequal profile.role role%}
+                    <option value="{{role}}" selected>{{role}}</option>
+                    {%else%}
+                    <option value="{{role}}">{{role}}</option>
+                    {%endifequal%}
+                {%endfor%}
+            </select>
+        </div>
+        <div class="col-sm-12">
+            <label for="bio" class="form-label">Bio</label>
+            <textarea name="bio" id="bio" style="resize: none;" class="form-control form-control-lg">{%ifequal profile.bio None%}{%else%}{{profile.bio}}{%endifequal%}</textarea>
+        </div>
+        <div class="col-sm-12">
+            <label for="pro_picture">Change Profile Picture</label>
+            <input type="file" name="pro_picture" id="pro_picture" class="form-control form-control-lg">
+        </div>
 
-{%block content%}
-
-{%endblock%}
+        <div class="col-sm-12 py-3">
+            <button class="btn btn-lg btn-primary">Update</button>
+        </div>
+    </form>
+</div>

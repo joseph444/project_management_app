@@ -3,7 +3,7 @@ from .forms import RegisterForm,LoginForm
 from .models import Users
 from django.contrib.auth import authenticate,logout,login
 from django.contrib.auth.decorators import login_required
-
+from profiles.models import Profile
 #TODO: create view functions for update profile, resetPassword
 
 
@@ -66,5 +66,8 @@ def Logout(request):
 
 @login_required
 def user_home(request):
-    return render(request,'views/users/index.html')
+    if Profile.objects.filter(user_id=request.user.id).exists():
+        return render(request,'views/users/index.html')
+    
+    return redirect('register_profile')
 

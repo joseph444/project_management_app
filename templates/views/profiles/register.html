@@ -1,5 +1,44 @@
 {%extends 'app/app.html'%}
 
 {%block content%}
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-4">
+                <div class="card p-2">
+                    <div class="card-body">
+                        <h2 class="card-header">Create Profile</h2>
 
+                        {%if errors%}
+                        <div class="alert alert-danger" role="alert">
+                          {{errors}}
+                        </div>
+                        {%endif%}
+                        <form action="/profile/register" method="post" class="row" enctype="multipart/form-data">
+                            {%csrf_token%}
+                            <div class="col-12">
+                                <label for="username" class="form-label">Username</label>
+                                <input type="text" name="username" id="username" class="form-control form-control-ld" required>
+                            </div>
+                            <div class="col-12">
+                                <label for="role" class="form-label">Role</label>
+                                <select name="role" class="form-select form-select-lg" id="role">
+                                    {%for role in roles%}
+                                    <option value="{{role}}">{{role}}</option>
+                                    {%endfor%}
+                                </select>
+                            </div>
+                            <div class="col-12">
+                                <label for="profile-img">Select a Profile Picture</label>
+                                <input type="file" name="pro_picture" id="profile-img" class="form-control">
+                            </div>
+
+                            <div class="col-4 p-3">
+                                <button class="btn btn-lg btn-primary">Create</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 {%endblock%}

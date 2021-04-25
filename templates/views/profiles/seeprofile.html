@@ -1,5 +1,30 @@
 {%extends 'app/app.html'%}
 
 {%block content%}
+    <div class="container row justify-content-center">
+        <div class="col-sm-6 ">
+            <div class="container bg-light rounded p-2">
+               <div class="row justify-content-center">
+                   <div class="col-3">
+                    <img src="{{profile.pro_picture.url}}" alt="{{profile.username}}" class="avatar">
+                   </div>
+                   <div class="col-6 pt-1">
+                       <h2 class="display-4">{{profile.username}}</h2>
+                       <strong class="text-secondary">{{profile.role}}</strong>
+                   </div>
 
+                   <div class="col-sm-12 px-4">
+                       {% if profile.bio != None %}
+                            <h2>Bio</h2>
+                            {{profile.bio}}
+                       {%endif%}
+                   </div>
+                   {%ifequal user.id profile.user_id.id%}
+                        {%include 'views/profiles/update.html'%}
+                    {%endifequal%}
+               </div>
+            </div>
+        </div>
+        
+    </div>
 {%endblock%}
