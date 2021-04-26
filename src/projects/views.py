@@ -21,7 +21,7 @@ def create_project(request):
             description = projectFm.cleaned_data.get('description',None)            
             budget = projectFm.cleaned_data.get('budget',None)
             user = request.user
-            print(Project.objects.filter(slug=unique_slugify(project_name)))
+            
             try:
                 project = Project(project_name=project_name,user_id=user,description=description,budget=budget)
                 project.save()
@@ -157,11 +157,15 @@ def project_details(request,slug):
     
     project = projects[0]
     subscribers = Subscriber.objects.filter(project=project)
-    #task
+
+    active_task = project.task_set.filter(is_done=False)
+    closed_task = project.task_set.filter(is_done=True)
     #bugs
     #expenses
 
     context['project']=project
     context['subscribers']=subscribers
+    context['active_tasks']=active_task
+    context['closed_tasks']=closed_task
     
     return render(request,'views/projects/project_details.html',context=context)

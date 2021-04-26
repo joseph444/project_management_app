@@ -1,0 +1,127 @@
+<div class="list-group">
+    <div class="list-group-item" >
+        <span class="float-end">
+            <a href="/projects/{{project.slug}}/tasks/create/" class="nav-link text-success">+</a>
+        </span>
+        <h3 data-bs-toggle="collapse" role="button" data-bs-target="#a1" aria-expanded="false" aria-controls="a1">Active Tasks</h3>
+        
+    </div>
+
+    
+        <div class="list-group-item collapse" id="a1">
+            <div class="row">
+                {%for task in active_tasks%}
+                    <div class="col-sm-4">
+                    <div class="card">
+                        <div class="card-header">
+                            {{task.name}}
+                        </div>
+                        <div class="card-body">
+                            <h4 class="card-text">{{task.description}}</h4>
+                            <p class="card-text text-secondary">{{task.created_at}}</p>
+                        </div>
+                        <div class="list-group list-group-flush">
+                            <div class="list-group-item">
+                                <strong>Assigned to:</strong>
+                                <a href="/profile/{{task.assigned_to.profile.username}}">{{task.assigned_to.profile.username}}</a>
+                            </div>
+                            {%ifequal task.assigned_to user%}
+                            <div class="list-group-item">
+                                <div class="btn-group">
+                                    <a href="/projects/{{project.slug}}/tasks/{{task.id}}/" class="btn btn-success">Details</a>
+                                    <form action="/projects/{{project.slug}}/tasks/{{task.id}}/toggle-done/" method="post">
+                                        {%csrf_token%}
+                                        <button class="btn btn-primary">Close Task</button>
+                                    </form>
+                                </div>
+                            </div>
+                            {%else%}
+                                {%ifequal project.user_id user%}
+                                <div class="list-group-item">
+                                    <div class="btn-group">
+                                        <a href="/projects/{{project.slug}}/tasks/{{task.id}}/" class="btn btn-success">Details</a>
+                                        <form action="/projects/{{project.slug}}/tasks/{{task.id}}/toggle-done/" method="post">
+                                            {%csrf_token%}
+                                            <button class="btn btn-primary">Close Task</button>
+                                        </form>
+                                        <form action="/projects/{{project.slug}}/tasks/{{task.id}}/delete/" method="post">
+                                            {%csrf_token%}
+                                            <button class="btn btn-danger">Delete</button>
+                                        </form>
+                                    </div>
+                                </div>
+                                {%else%}
+                                <div class="list-group-item">
+                                    <div class="btn-group">
+                                        <a href="/projects/{{project.slug}}/tasks/{{task.id}}/" class="btn btn-success">Details</a>
+                                       
+                                    </div>
+                                </div>
+                                {%endifequal%}
+                            {%endifequal%}
+                        </div>
+                    </div>
+                    </div>
+                {%endfor%}
+            </div>
+        </div>
+    
+    
+    <div class="list-group-item" role="button" data-bs-toggle="collapse" data-bs-target="#a2" aria-expanded="false"  aria-controls="a2">
+        <h3>Closed Tasks</h3>
+        
+    </div>
+    
+    <div class="list-group-item collapse" id="a2">
+        <div class="row">
+            {%for task in closed_tasks%}
+                <div class="col-sm-4">
+                <div class="card">
+                    <div class="card-header">
+                        {{task.name}}
+                    </div>
+                    <div class="card-body">
+                        <h4 class="card-text">{{task.description}}</h4>
+                        <p class="card-text text-secondary">{{task.created_at}}</p>
+                    </div>
+                    <div class="list-group list-group-flush">
+                        <div class="list-group-item">
+                            <strong>Assigned to:</strong>
+                            <a href="/profile/{{task.assigned_to.profile.username}}">{{task.assigned_to.profile.username}}</a>
+                        </div>
+                        {%ifequal task.assigned_to user%}
+                        <div class="list-group-item">
+                            <div class="btn-group">
+                                <a href="/projects/{{project.slug}}/tasks/{{task.id}}/" class="btn btn-success">Details</a>
+                                <form action="/projects/{{project.slug}}/tasks/{{task.id}}/toggle-done/" method="post">
+                                    {%csrf_token%}
+                                    <button class="btn btn-primary">Open Task</button>
+                                </form>
+                            </div>
+                        </div>
+                        {%else%}
+                            {%ifequal project.user_id user%}
+                            <div class="list-group-item">
+                                <div class="btn-group">
+                                    <a href="/projects/{{project.slug}}/tasks/{{task.id}}/" class="btn btn-success">Details</a>
+                                    <form action="/projects/{{project.slug}}/tasks/{{task.id}}/toggle-done/" method="post">
+                                        {%csrf_token%}
+                                        <button class="btn btn-primary">Open Task</button>
+                                    </form>
+                                    <form action="/projects/{{project.slug}}/tasks/{{task.id}}/delete/" method="post">
+                                        {%csrf_token%}
+                                        <button class="btn btn-danger">Delete</button>
+                                    </form>
+                                </div>
+                            </div>
+                            {%endifequal%}
+                        {%endifequal%}
+                    </div>
+                </div>
+            </div>
+            {%endfor%}
+        </div>
+    </div>
+
+
+</div>
