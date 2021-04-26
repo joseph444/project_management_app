@@ -22,4 +22,7 @@ class Task(models.Model):
             super(Task,self).save(*args,**kwargs)
         except Subscriber.DoesNotExist as e:
             raise e
+    
+    def __str__(self):
+        return self.name
 

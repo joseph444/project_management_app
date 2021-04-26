@@ -48,6 +48,7 @@
                                             {%csrf_token%}
                                             <button class="btn btn-danger">Delete</button>
                                         </form>
+                                        <a href="/projects/{{project.slug}}/tasks/{{task.id}}/edit" class="btn btn-warning">Edit</a>
                                     </div>
                                 </div>
                                 {%else%}
@@ -112,6 +113,7 @@
                                         {%csrf_token%}
                                         <button class="btn btn-danger">Delete</button>
                                     </form>
+                                    <a href="/projects/{{project.slug}}/tasks/{{task.id}}/edit" class="btn btn-warning">Edit</a>
                                 </div>
                             </div>
                             {%endifequal%}

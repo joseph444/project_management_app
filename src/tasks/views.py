@@ -85,12 +85,14 @@ def delete_task(request,slug,id):
 @login_required
 def edit_task(request,slug,id):
     context = dict()
+    context['slug']=slug
     projects = get_projects_from_slug(slug).filter(user_id=request.user)
     if not projects.exists():
         raise Http404()
     
     try:
         task=Task.objects.get(project=projects[0],id=id)
+        
         if request.method == "POST":
             taskForm = TaskCreationForm(request.POST)
             if taskForm.is_valid():
@@ -99,11 +101,15 @@ def edit_task(request,slug,id):
                 task.resources = taskForm.cleaned_data['resources']
                 task.deadline=taskForm.cleaned_data['deadline']
                 task.save()
+                return redirect('project_details',slug=slug)
             else:
                 context['errors']=taskForm.errors
     except Task.DoesNotExist:
-        context['errors']="Task doesn't Exists"
+        raise Http404()
     
+    print(task)
+    context['task']=task
+    context['subscribers']=projects[0].subscriber_set.all()
     return render(request,"views/tasks/edit_task.html",context=context)
     
     
