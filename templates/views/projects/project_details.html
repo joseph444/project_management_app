@@ -7,18 +7,20 @@
             <!--Project Details-->
             <div class="card">
                 <div class="card-header">
-                    <h4>{{project.project_name}}</h4>
+                    <h3>{{project.project_name}}</h3>
                 </div>
                 <div class="card-body">
-                    <h5 class="card-text">
+                    <h4 class="card-text">
                         <strong>Description:</strong>
                         {{project.description}}
-                    </h5>
+                    </h4>
+                    <h5 class="text-{{status}}">Remaining From Budget: {{leftover}}</h5>
                     <p class="card-text text-secondary">
                         {{project.created_at}}
                     </p>
                 </div>
                 <div class="list-group list-group-flush">
+                    
                     <li class="list-group-item">
                         <h4>Team Member List</h4>
                     </li>
@@ -74,7 +76,9 @@
         </div>
         <div class="col-sm-9">
             {%include 'views/tasks/list_tasks.html'%}
+            {%include 'views/expenses/list_expenses.html'%}
         </div>
+        
     </div>
 </div>
 {%endblock%}

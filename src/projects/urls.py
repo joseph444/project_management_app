@@ -9,6 +9,7 @@ urlpatterns = [
     path('<slug:slug>/transfer/',views.transfer_ownership,name='delete_project'),
     path('<slug:slug>/remove/',views.remove_from_project,name='delete_project'),
     path('<slug:slug>/tasks/',include('tasks.urls')),
+    path('<slug:slug>/expenses/',include('expenses.urls')),
     path('create/',views.create_project,name='create_project'),
     path('join/',views.join_project,name='join_project')
 

@@ -50,7 +50,7 @@ def create_task(request,slug):
     
 @login_required
 def toggle_is_done(request,slug,id):
-    projects = get_projects_from_slug(slug).filter(task__id=id).filter(Q(user_id=request.user)|Q(task__assigned_to=request.user))
+    projects = get_projects_from_slug(slug).filter(task__id=id).filter(Q(subscriber__subscriber=user)|Q(user_id=user))
     if not projects.exists():
         raise Http404()
     
@@ -86,7 +86,7 @@ def delete_task(request,slug,id):
 def edit_task(request,slug,id):
     context = dict()
     context['slug']=slug
-    projects = get_projects_from_slug(slug).filter(user_id=request.user)
+    projects = get_projects_from_slug(slug).filter(Q(subscriber__subscriber=user)|Q(user_id=user))
     if not projects.exists():
         raise Http404()
     

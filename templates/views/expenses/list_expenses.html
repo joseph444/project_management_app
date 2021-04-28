@@ -1,0 +1,72 @@
+<div class="list-group">
+    <div class="list-group-item" >
+        
+            <span class="float-end">
+                <a href="/projects/{{project.slug}}/expenses/create/" class="nav-link text-success">+</a>
+            </span>
+       
+        <h3 data-bs-toggle="collapse" role="button" data-bs-target="#a3" aria-expanded="false" aria-controls="a3">Active expenses</h3>
+        
+    </div>
+
+    
+    <div class="list-group-item collapse" id="a3">
+            <div class="row">
+                {%for expense in expenses%}
+                    <div class="col-sm-4">
+                    <div class="card">
+                        <div class="card-header">
+                            {{expense.name}}
+                        </div>
+                        <div class="card-body">
+                            <h4 class="card-text">{{expense.description}}</h4>
+                            <h5 class="card-text text-danger">Spent: {{expense.expense}}</h5>
+                            <p class="card-text text-secondary">{{expense.created_at}}</p>
+                        </div>
+                        <div class="list-group list-group-flush">
+                            <div class="list-group-item">
+                                <strong>Registered By:</strong>
+                                <a href="/profile/{{expense.registered_by.profile.username}}">{{expense.registered_by.profile.username}}</a>
+                            </div>
+                            {%ifequal expense.registered_by user%}
+                            <div class="list-group-item">
+                                <div class="btn-group">
+                                    <a href="/projects/{{project.slug}}/expenses/{{expense.id}}/" class="btn btn-success">Details</a>
+                                    <form action="/projects/{{project.slug}}/expenses/{{expense.id}}/delete/" method="post">
+                                        {%csrf_token%}
+                                        <button class="btn btn-danger">Delete</button>
+                                    </form>
+                                </div>
+                            </div>
+                            {%else%}
+                                {%ifequal project.user_id user%}
+                                <div class="list-group-item">
+                                    <div class="btn-group">
+                                        <a href="/projects/{{project.slug}}/expenses/{{expense.id}}/" class="btn btn-success">Details</a>
+                                        <form action="/projects/{{project.slug}}/expenses/{{expense.id}}/delete/" method="post">
+                                            {%csrf_token%}
+                                            <button class="btn btn-danger">Delete</button>
+                                        </form>
+                                    </div>
+                                </div>
+                                {%else%}
+                                <div class="list-group-item">
+                                    <div class="btn-group">
+                                        <a href="/projects/{{project.slug}}/expenses/{{expense.id}}/" class="btn btn-success">Details</a>
+                                       
+                                    </div>
+                                </div>
+                                {%endifequal%}
+                            {%endifequal%}
+                        </div>
+                    </div>
+                    </div>
+                {%endfor%}
+            </div>
+    </div>
+    
+    
+    
+
+
+</div>

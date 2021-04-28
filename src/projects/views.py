@@ -147,7 +147,11 @@ def transfer_ownership(request,slug):
             except Subscriber.DoesNotExist as e:
                 context['errors']="The user isn't subscribed to this project"
     return redirect("user_home")
-            
+
+
+
+from expenses.models import get_total_expense
+
 @login_required
 def project_details(request,slug):
     context = dict()
@@ -158,14 +162,18 @@ def project_details(request,slug):
     project = projects[0]
     subscribers = Subscriber.objects.filter(project=project)
 
+    #tasks
     active_task = project.task_set.filter(is_done=False)
     closed_task = project.task_set.filter(is_done=True)
     #bugs
-    #expenses
 
+    #expenses
+    expenses = project.expense_set.all()
     context['project']=project
     context['subscribers']=subscribers
     context['active_tasks']=active_task
     context['closed_tasks']=closed_task
+    context['expenses']=expenses
+    get_total_expense(project,context)
     
     return render(request,'views/projects/project_details.html',context=context)

@@ -1,0 +1,25 @@
+<form action="/projects/{{project.slug}}/expenses/{{expense.id}}/edit/" method="POST" class="row">
+    {%csrf_token%}
+    {%if errors%}
+        <div class="col-sm-12">
+            <div class="alert alert-danger">
+                {{errors}}
+            </div>
+        </div>
+    {%endif%}
+    <div class="col-sm-12">
+        <label for="name" class="form-label">Name</label>
+        <input type="text" id="name" name="name" class="form-control form-control-lg" value="{{expense.name}}" required> 
+    </div>
+    <div class="col-sm-12">
+        <label for="description">Description</label>
+        <textarea name="description" id="description" class="form-control form-control-lg" style="resize: none;" required>{{expense.description}}</textarea>
+    </div>
+    <div class="col-sm-12">
+        <label for="expenses">Expense</label>
+        <input type="number" max="{{project.budget}}"  name="expense" id="expenses"class="form-control form-control-lg" value="{{expense.expense}}" required>
+    </div>
+    <div class="col-sm-12 py-2">
+        <button class="btn btn-lg btn-primary">Update</button>
+    </div>
+</form>

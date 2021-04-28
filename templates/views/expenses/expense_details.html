@@ -1,0 +1,63 @@
+{%extends 'app/app.html'%}
+
+{%block content %}
+    <div class="row justify-content-center">
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-header">
+                    <h2>{{expense.name}} for {{project.project_name}}</h2>
+                </div>
+                <div class="card-body">
+                    <h4 class="card-text">Description: {{expense.description}}</h4>
+                </div>
+                <div class="list-group list-group-flush">
+                    <div class="list-group-item" data-bs-target="#expense" data-bs-toggle="collapse" aria-expanded="false" aria-controls="expense">
+                        <span class="float-end"> <strong> &#8595;</strong> </span>
+                        <h4>Expenses</h4>
+                    </div>
+                    <div class="list-group-item collapse" id="expense">
+                        <div class="list-group list-group-flush">
+                            <div class="list-group-item">
+                                Projects Budget: {{project.budget}}
+                            </div>
+                            <div class="list-group-item text-danger">
+                                Spent: {{expense.expense}}
+                            </div>
+                            <div class="list-group-item text-{{status}}">
+                                Now Remaining: {{leftover}}
+                            </div>
+                        </div>
+                    </div>
+                    {%ifequal expense.registered_by user%}
+                        <div class="list-group-item" data-bs-target="#update" data-bs-toggle="collapse" aria-expanded="false" aria-controls="update">
+                            <span class="float-end"> <strong> &#8595;</strong> </span>
+                            <h4>Update the Expense</h4>
+                        </div>
+                    {%else%}
+                        {%ifequal project.user_id user%}
+                        <div class="list-group-item" data-bs-target="#update" data-bs-toggle="collapse" aria-expanded="false" aria-controls="update">
+                            <span class="float-end"> <strong> &#8595;</strong> </span>
+                            <h4>Update the Expense</h4>
+                        </div>
+                        
+                            
+                        {%endifequal%}
+                    {%endifequal%}
+                </div>
+                {%ifequal expense.registered_by user%}
+                <div class="card-body collapse" id="update">
+                    {%include 'views/expenses/update_expenses.html'%}
+                </div>
+                {%else%}
+                    {%ifequal project.user_id user%}
+                    <div class="card-body">
+                        {%include 'views/expenses/update_expenses.html'%}
+                    </div>
+                    
+                        
+                    {%endifequal%}
+                {%endifequal%}
+            </div>
+        </div>
+    </div>
+{%endblock%}

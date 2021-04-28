@@ -90,18 +90,7 @@
                             <strong>Assigned to:</strong>
                             <a href="/profile/{{task.assigned_to.profile.username}}">{{task.assigned_to.profile.username}}</a>
                         </div>
-                        {%ifequal task.assigned_to user%}
-                        <div class="list-group-item">
-                            <div class="btn-group">
-                                <a href="/projects/{{project.slug}}/tasks/{{task.id}}/" class="btn btn-success">Details</a>
-                                <form action="/projects/{{project.slug}}/tasks/{{task.id}}/toggle-done/" method="post">
-                                    {%csrf_token%}
-                                    <button class="btn btn-primary">Open Task</button>
-                                </form>
-                            </div>
-                        </div>
-                        {%else%}
-                            {%ifequal project.user_id user%}
+                        {%ifequal project.user_id user%}
                             <div class="list-group-item">
                                 <div class="btn-group">
                                     <a href="/projects/{{project.slug}}/tasks/{{task.id}}/" class="btn btn-success">Details</a>
@@ -116,8 +105,18 @@
                                     <a href="/projects/{{project.slug}}/tasks/{{task.id}}/edit" class="btn btn-warning">Edit</a>
                                 </div>
                             </div>
-                            {%endifequal%}
+                        {%else%}
+                        <div class="list-group-item">
+                            <div class="btn-group">
+                                <a href="/projects/{{project.slug}}/tasks/{{task.id}}/" class="btn btn-success">Details</a>
+                                <form action="/projects/{{project.slug}}/tasks/{{task.id}}/toggle-done/" method="post">
+                                    {%csrf_token%}
+                                    <button class="btn btn-primary">Open Task</button>
+                                </form>
+                            </div>
+                        </div>
                         {%endifequal%}
+                        
                     </div>
                 </div>
             </div>
