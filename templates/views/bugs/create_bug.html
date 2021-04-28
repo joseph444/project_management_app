@@ -1,0 +1,43 @@
+{%extends 'app/app.html'%}
+
+{%block content%}
+<div class="row justify-content-center">
+    <div class="col-sm-4">
+        <div class="card">
+            <div class="card-header">
+                <h2>Register A Bug For Task {{task.name}}</h2>
+            </div>
+            <div class="card-body">
+                <form action="/projects/{{project.slug}}/tasks/{{task.id}}/bugs/create/" method="post" class="row">
+                    {%csrf_token%}
+                    {%if errors%}
+                        <div class="col-md-12">
+                            <div class="alert alert-danger">
+                                {{errors}}
+                            </div>
+                        </div>
+                    {%endif%}
+                   
+                    <div class="col-sm-12">
+                        <label for="name">Name</label>
+                        <input type="text" name="name" id="name" class="form-control form-control-lg" required>
+                    </div>
+                    <div class="col-sm-12">
+                        <label for="description">Description</label>
+                        <input type="text" name="description" id="description" class="form-control form-control-lg" required>
+                    </div>
+                    <div class="col-sm-12">
+                        <label for="resource">Please Describe the way to reproduce the bug </label>
+                        <textarea style="resize: none;" name="reproduce" id="resource" class="form-control form-control-lg" ></textarea>
+                    </div>
+                    
+                    <div class="col-sm-12 py-2">
+                        <button class="btn btn-lg btn-primary">Create</button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{%endblock%}

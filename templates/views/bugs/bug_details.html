@@ -1,0 +1,39 @@
+{%extends 'app/app.html'%}
+{%block content%}
+    <div class="row justify-content-center">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">
+                    
+                    <h2>{{bug.name}}</h2>
+                </div>
+                <div class="card-body">
+                    <h3 class="card-text">
+                        <strong>Description :</strong>
+                        <br>
+                        {{bug.description}}
+                    </h3>
+                    <h4 class="card-text text-primary">
+                        <strong>Steps to reproduce the bug  :</strong>
+                        <br>
+                        {{html_produced|safe}}
+                    </h4>
+                </div>
+                {%if bug.registered_by == user or project.user_id == user or task.assigned_to == user%}
+                <div class="list-group list-group-flush">
+                    <div class="list-group-item" data-bs-target='#a1' data-bs-toggle="collapse" aria-expanded="false" aria-controls="a1">
+                        <h5>Update Form</h5>
+                    </div>
+                    <div class="list-group-item collapse" id="a1">
+                        {%include 'views/bugs/edit_bug.html'%}
+                    </div>
+                </div>
+                
+                {%endif%}
+                <div class="card-footer">
+                    {{bug.created_at}}
+                </div>
+            </div>
+        </div>
+    </div>
+{%endblock%}

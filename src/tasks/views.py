@@ -18,6 +18,7 @@ def return_alert_message(message=""):
 
 @login_required
 def create_task(request,slug):
+    user = request.user
     context = dict()
     context['slug']=slug
     projects = get_projects_from_slug(slug=slug).filter(Q(user_id=request.user)|Q(subscriber__subscriber=request.user))
@@ -50,6 +51,7 @@ def create_task(request,slug):
     
 @login_required
 def toggle_is_done(request,slug,id):
+    user = request.user
     projects = get_projects_from_slug(slug).filter(task__id=id).filter(Q(subscriber__subscriber=user)|Q(user_id=user))
     if not projects.exists():
         raise Http404()
@@ -67,6 +69,7 @@ def toggle_is_done(request,slug,id):
 
 @login_required
 def delete_task(request,slug,id):
+    user = request.user
     projects = get_projects_from_slug(slug).filter(user_id=request.user)
     if not projects.exists():
         raise Http404()
@@ -84,6 +87,7 @@ def delete_task(request,slug,id):
 
 @login_required
 def edit_task(request,slug,id):
+    user = request.user
     context = dict()
     context['slug']=slug
     projects = get_projects_from_slug(slug).filter(Q(subscriber__subscriber=user)|Q(user_id=user))
@@ -117,7 +121,24 @@ def edit_task(request,slug,id):
     
 @login_required
 def task_details(request,slug,id):
-    return redirect("home")
+    user = request.user
+    context = dict()
+    context['slug']=slug
+    projects = get_projects_from_slug(slug).filter(Q(subscriber__subscriber=user)|Q(user_id=user))
+    if not projects.exists():
+        raise Http404()
+    
+    try:
+        task=Task.objects.get(project=projects[0],id=id)
+        
+    except Task.DoesNotExist:
+        raise Http404()
+    
+    context['task']=task
+    context['open_bugs'] = task.bug_set.filter(is_close=False)
+    context['closed_bugs'] = task.bug_set.filter(is_close=True)
+    
+    return render(request,"views/tasks/task_details.html",context=context)
 
 
     

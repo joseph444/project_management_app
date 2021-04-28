@@ -1,0 +1,177 @@
+<div class="list-group">
+    <div class="list-group-item" >
+        
+            <span class="float-end">
+                <a href="/projects/{{slug}}/tasks/{{task.id}}/bugs/create/" class="nav-link text-success">+</a>
+            </span>
+       
+        <h3 data-bs-toggle="collapse" role="button" data-bs-target="#a3" aria-expanded="false" aria-controls="a3">Open Bugs</h3>
+        
+    </div>
+
+    
+    <div class="list-group-item collapse" id="a3">
+            <div class="row">
+                {%for bug in open_bugs%}
+                    <div class="col-sm-4">
+                    <div class="card">
+                        <div class="card-header">
+                            {{bug.name}}
+                        </div>
+                        <div class="card-body">
+                            <h4 class="card-text">{{bug.description}}</h4>
+                            
+                            <p class="card-text text-secondary">{{bug.created_at}}</p>
+                        </div>
+                        <div class="list-group list-group-flush">
+                            <div class="list-group-item">
+                                <strong>Registered By:</strong>
+                                <a href="/profile/{{bug.registered_by.profile.username}}">{{bug.registered_by.profile.username}}</a>
+                            </div>
+                            {%ifequal bug.registered_by user%}
+                            <div class="list-group-item">
+                                <div class="btn-group">
+                                    <a href="/projects/{{slug}}/tasks/{{task.id}}/bugs/{{bug.id}}/" class="btn btn-success">Details</a>
+                                    <form action="/projects/{{slug}}/tasks/{{task.id}}/bugs/{{bug.id}}/delete/" method="post">
+                                        {%csrf_token%}
+                                        <button class="btn btn-danger">Delete</button>
+                                    </form>
+                                    <form action="/projects/{{slug}}/tasks/{{task.id}}/bugs/{{bug.id}}/toggle-close/" method="post">
+                                        {%csrf_token%}
+                                        <button class="btn btn-primary">Close Bug</button>
+                                    </form>
+                                </div>
+                            </div>
+                            {%else%}
+                                {%ifequal project.user_id user%}
+                                <div class="list-group-item">
+                                    <div class="btn-group">
+                                        <a href="/projects/{{slug}}/tasks/{{task.id}}/bugs/{{bug.id}}/" class="btn btn-success">Details</a>
+                                        <form action="/projects/{{slug}}/tasks/{{task.id}}/bugs/{{bug.id}}/delete/" method="post">
+                                            {%csrf_token%}
+                                            <button class="btn btn-danger">Delete</button>
+                                        </form>
+                                        <form action="/projects/{{slug}}/tasks/{{task.id}}/bugs/{{bug.id}}/toggle-close/" method="post">
+                                            {%csrf_token%}
+                                            <button class="btn btn-primary">Close Bug</button>
+                                        </form>
+                                    </div>
+                                </div>
+                                {%else%}
+                                    {%ifequal task.assigned_to user%}
+                                    <div class="list-group-item">
+                                        <div class="btn-group">
+                                            <a href="/projects/{{slug}}/tasks/{{task.id}}/bugs/{{bug.id}}/" class="btn btn-success">Details</a>
+                                            <form action="/projects/{{slug}}/tasks/{{task.id}}/bugs/{{bug.id}}/delete/" method="post">
+                                                {%csrf_token%}
+                                                <button class="btn btn-danger">Delete</button>
+                                            </form>
+                                            <form action="/projects/{{slug}}/tasks/{{task.id}}/bugs/{{bug.id}}/toggle-close/" method="post">
+                                                {%csrf_token%}
+                                                <button class="btn btn-primary">Close Bug</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    {%else%}
+                                    <div class="list-group-item">
+                                        <div class="btn-group">
+                                            <a href="/projects/{{slug}}/tasks/{{task.id}}/bugs/{{bug.id}}/" class="btn btn-success">Details</a>
+                                           
+                                        </div>
+                                    </div>
+                                    {%endifequal%}
+                                {%endifequal%}
+                            {%endifequal%}
+                        </div>
+                    </div>
+                    </div>
+                {%endfor%}
+            </div>
+    </div>
+
+    <div class="list-group-item" >
+        
+    <h3 data-bs-toggle="collapse" role="button" data-bs-target="#a4" aria-expanded="false" aria-controls="a4">Closed Bugs</h3>
+    
+</div>
+
+
+<div class="list-group-item collapse" id="a4">
+        <div class="row">
+            {%for bug in closed_bugs%}
+                <div class="col-sm-4">
+                <div class="card">
+                    <div class="card-header">
+                        {{bug.name}}
+                    </div>
+                    <div class="card-body">
+                        <h4 class="card-text">{{bug.description}}</h4>
+                        
+                        <p class="card-text text-secondary">{{bug.created_at}}</p>
+                    </div>
+                    <div class="list-group list-group-flush">
+                        <div class="list-group-item">
+                            <strong>Registered By:</strong>
+                            <a href="/profile/{{bug.registered_by.profile.username}}">{{bug.registered_by.profile.username}}</a>
+                        </div>
+                        {%ifequal bug.registered_by user%}
+                        <div class="list-group-item">
+                            <div class="btn-group">
+                                <a href="/projects/{{slug}}/tasks/{{task.id}}/bugs/{{bug.id}}/" class="btn btn-success">Details</a>
+                                <form action="/projects/{{slug}}/tasks/{{task.id}}/bugs/{{bug.id}}/delete/" method="post">
+                                    {%csrf_token%}
+                                    <button class="btn btn-danger">Delete</button>
+                                </form>
+                                <form action="/projects/{{slug}}/tasks/{{task.id}}/bugs/{{bug.id}}/toggle-close/" method="post">
+                                    {%csrf_token%}
+                                    <button class="btn btn-primary">Open Bug</button>
+                                </form>
+                            </div>
+                        </div>
+                        {%else%}
+                            {%ifequal project.user_id user%}
+                            <div class="list-group-item">
+                                <div class="btn-group">
+                                    <a href="/projects/{{slug}}/tasks/{{task.id}}/bugs/{{bug.id}}/" class="btn btn-success">Details</a>
+                                    <form action="/projects/{{slug}}/tasks/{{task.id}}/bugs/{{bug.id}}/delete/" method="post">
+                                        {%csrf_token%}
+                                        <button class="btn btn-danger">Delete</button>
+                                    </form>
+                                    <form action="/projects/{{slug}}/tasks/{{task.id}}/bugs/{{bug.id}}/toggle-close/" method="post">
+                                        {%csrf_token%}
+                                        <button class="btn btn-primary">Open Bug</button>
+                                    </form>
+                                </div>
+                            </div>
+                            {%else%}
+                                {%ifequal task.assigned_to user%}
+                                <div class="list-group-item">
+                                    <div class="btn-group">
+                                        <a href="/projects/{{slug}}/tasks/{{task.id}}/bugs/{{bug.id}}/" class="btn btn-success">Details</a>
+                                        <form action="/projects/{{slug}}/tasks/{{task.id}}/bugs/{{bug.id}}/delete/" method="post">
+                                            {%csrf_token%}
+                                            <button class="btn btn-danger">Delete</button>
+                                        </form>
+                                        <form action="/projects/{{slug}}/tasks/{{task.id}}/bugs/{{bug.id}}/toggle-close/" method="post">
+                                            {%csrf_token%}
+                                            <button class="btn btn-primary">Open Bug</button>
+                                        </form>
+                                    </div>
+                                </div>
+                                {%else%}
+                                <div class="list-group-item">
+                                    <div class="btn-group">
+                                        <a href="/projects/{{slug}}/tasks/{{task.id}}/bugs/{{bug.id}}/" class="btn btn-success">Details</a>
+                                       
+                                    </div>
+                                </div>
+                                {%endifequal%}
+                            {%endifequal%}
+                        {%endifequal%}
+                    </div>
+                </div>
+                </div>
+            {%endfor%}
+        </div>
+</div>
+</div>
