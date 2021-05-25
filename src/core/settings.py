@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 import os
+import dj_database_url
+from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -25,7 +27,7 @@ ROOT_DIR = Path(__file__).resolve().parent.parent.parent
 SECRET_KEY = 'django-insecure-um@+@qx06p-uw2k^6rk=8hxurdieyoj260k63yzn%5%scra=!)'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config('DEBUG',default=False,cast=bool)
 
 ALLOWED_HOSTS = []
 
@@ -84,14 +86,16 @@ AUTH_USER_MODEL='users.Users'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'project_management_app',
-        'USER': 'postgres',
-        'PASSWORD':'passwords',
-        'HOST':'localhost'
-    }
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.postgresql',
+    #     'NAME': 'project_management_app',
+    #     'USER': 'postgres',
+    #     'PASSWORD':'passwords',
+    #     'HOST':'localhost'
+    # }
+    'default':dj_database_url.config(default=config('DATABASE_URL'))
 }
 
 
@@ -99,18 +103,11 @@ DATABASES = {
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
+   
     {
         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
     },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
+   
 ]
 
 
@@ -149,3 +146,4 @@ MEDIA_URL = '/media/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
