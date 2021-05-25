@@ -27,9 +27,9 @@ ROOT_DIR = Path(__file__).resolve().parent.parent.parent
 SECRET_KEY = 'django-insecure-um@+@qx06p-uw2k^6rk=8hxurdieyoj260k63yzn%5%scra=!)'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = config('DEBUG',default=False,cast=bool)
+DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -88,14 +88,14 @@ AUTH_USER_MODEL='users.Users'
 
 
 DATABASES = {
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.postgresql',
-    #     'NAME': 'project_management_app',
-    #     'USER': 'postgres',
-    #     'PASSWORD':'passwords',
-    #     'HOST':'localhost'
-    # }
-    'default':dj_database_url.config(default=config('DATABASE_URL'))
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'project_management_app',
+        'USER': 'postgres',
+        'PASSWORD':'passwords',
+        'HOST':'localhost'
+    }
+    # 'default':dj_database_url.config(default=config('DATABASE_URL'))
 }
 
 
@@ -146,4 +146,4 @@ MEDIA_URL = '/media/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+# STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
