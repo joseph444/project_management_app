@@ -25,6 +25,7 @@ def create_task(request,slug):
     if not projects.exists() :
         raise Http404()
     project = projects[0]
+    context['user']=user
     context['subscribers']=project.subscriber_set.all()
     if request.method=="POST":
         taskForm = TaskCreationForm(request.POST)
@@ -46,7 +47,7 @@ def create_task(request,slug):
             except Subscriber.DoesNotExist:
                 context['errors'] = "The User isn't Subscribed to the project"
                 pass
-        
+    print(context)
     return render(request,'views/tasks/create_task.html',context=context)
     
 @login_required

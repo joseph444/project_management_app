@@ -10,15 +10,11 @@
             <div class="nav-item">
               <a href="/users/" class="nav-link">Home</a>
             </div>
-            <div class="nav-item">
-              <a href="/projects/" class="nav-link">Projects</a>
-            </div>
+           
             <div class="nav-item">
               <a href="/profile/" class="nav-link">Profile</a>
             </div>
-            <div class="nav-item">
-              <a href="/users/update" class="nav-link">Settings</a>
-            </div>
+            
             <form action="/users/logout" method="post" class="nav-item">
               {%csrf_token%}
                 <button class=" btn nav-link">Logout</button>

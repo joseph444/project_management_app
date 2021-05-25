@@ -2,8 +2,8 @@
 
 {%block content%}
     <div class="container-fluid">
-        <div class="row justify-content-center  p-3">
-            <div class="col-md-2">
+        <div class="row justify-content-center  p-lg-3">
+            <div class="col-lg-2 col-12">
                 <div class="list-group ">
                     <div class="list-group-item {%ifequal template 'all_project' %}active{%endifequal%}">
                         <a href="/users" class="nav-link text-dark">All Project</a>
@@ -17,7 +17,7 @@
                     
                 </div>
             </div>
-            <div class="col-md-7">
+            <div class="col-lg-7 col-12">
                 {%include template_url%}
             </div>
         </div>

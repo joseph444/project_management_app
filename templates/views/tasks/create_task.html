@@ -13,6 +13,7 @@
                     <div class="col-sm-12">
                         <label for="assign">Assign To</label>
                         <select name="assigned_to" id="assign" class="form-select" required>
+                            <option value="{{user.id}}">{{user.profile.username}}</option>
                             {%for subscriber in subscribers%}
                             <option value="{{subscriber.subscriber.id}}">{{subscriber.subscriber.profile.username}}</option>
                             {%endfor%}

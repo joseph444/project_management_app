@@ -17,11 +17,15 @@ class Task(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def save(self,*args,**kwargs):
-        try:
-            val = Subscriber.objects.get(project=self.project,subscriber=self.assigned_to)
-            super(Task,self).save(*args,**kwargs)
-        except Subscriber.DoesNotExist as e:
-            raise e
+        if(self.project.user_id!=self.assigned_to):
+            try:
+            
+                val = Subscriber.objects.get(project=self.project,subscriber=self.assigned_to)
+                
+            except Subscriber.DoesNotExist as e:
+                raise e
+        
+        super(Task,self).save(*args,**kwargs)
     
     def __str__(self):
         return self.name

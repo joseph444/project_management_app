@@ -176,4 +176,5 @@ def project_details(request,slug):
     context['expenses']=expenses
     get_total_expense(project,context)
     
+    print(context['active_tasks'])
     return render(request,'views/projects/project_details.html',context=context)
